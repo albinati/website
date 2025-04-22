@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "project": {
+    "name": "Caça Plantão Website",
+    "description": "Landing page e aplicação web para a plataforma Caça Plantão"
+  },
+  "architecture": {
+    "principles": [
+      "Next.js App Router pattern",
+      "Clean and modular component structure",
+      "Clear separation of concerns between UI, logic, and data"
+    ],
+    "patterns": [
+      {
+        "name": "Page Component",
+        "description": "Components that serve as Next.js pages",
+        "location": "src/app/**/page.tsx"
+      },
+      {
+        "name": "Layout Component",
+        "description": "Components that define the layout for pages",
+        "location": "src/app/**/layout.tsx"
+      },
+      {
+        "name": "Route Handlers",
+        "description": "API endpoints using Next.js route handlers",
+        "location": "src/app/api/**/*.ts"
+      },
+      {
+        "name": "UI Components",
+        "description": "Reusable UI components",
+        "location": "src/components/**/*.tsx"
+      },
+      {
+        "name": "React Hooks",
+        "description": "Custom React hooks",
+        "location": "src/hooks/**/*.ts"
+      },
+      {
+        "name": "Utilities",
+        "description": "Utility functions and helpers",
+        "location": "src/utils/**/*.ts"
+      },
+      {
+        "name": "Data Models",
+        "description": "Prisma schema and type definitions",
+        "location": "prisma/schema.prisma"
+      }
+    ]
+  },
+  "guidelines": [
+    "Use TypeScript types for all props and state",
+    "Keep components focused on a single responsibility",
+    "Prefer server components where possible for better performance",
+    "Use client components only when necessary for interactivity",
+    "Follow Prisma best practices for database queries",
+    "Keep styling within Tailwind CSS utility classes",
+    "Handle errors properly in all async operations"
+  ],
+  "dependencies": {
+    "stack": [
+      "Next.js 15.3.1",
+      "React 19.0.0",
+      "TypeScript 5.x",
+      "Tailwind CSS 3.4.1",
+      "Prisma 6.6.0",
+      "Next Auth 4.24.11",
+      "Stripe 18.0.0"
+    ]
+  }
+} 
