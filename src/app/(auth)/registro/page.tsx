@@ -11,7 +11,7 @@ import CityAutocomplete from '@/components/forms/CityAutocomplete';
 
 export default function RegistroPage() {
   const searchParams = useSearchParams();
-  const planId = searchParams.get('plan') || 'calm';
+  const planId = searchParams.get('plan') || 'gratuito';
   
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -27,10 +27,16 @@ export default function RegistroPage() {
     prefersCashOnly: false,
     interestedInRemote: true,
     plan: planId,
+    acceptTerms: false,
   });
   
   // State for the new location being added
   const [newLocation, setNewLocation] = useState('');
+  // Add error states
+  const [errors, setErrors] = useState({
+    passwordMatch: false,
+    termsAccepted: false
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target as HTMLInputElement;
@@ -40,11 +46,21 @@ export default function RegistroPage() {
         ...prev,
         [name]: (e.target as HTMLInputElement).checked,
       }));
+      
+      // Clear terms error when accepted
+      if (name === 'acceptTerms' && (e.target as HTMLInputElement).checked) {
+        setErrors(prev => ({...prev, termsAccepted: false}));
+      }
     } else {
       setFormData((prev) => ({
         ...prev,
         [name]: value,
       }));
+      
+      // Clear password match error if changing password fields
+      if (name === 'password' || name === 'confirmPassword') {
+        setErrors(prev => ({...prev, passwordMatch: false}));
+      }
     }
   };
 
@@ -79,8 +95,22 @@ export default function RegistroPage() {
     }));
   };
 
+  const validateStep = (currentStep: number): boolean => {
+    if (currentStep === 1) {
+      // Validate passwords match
+      if (formData.password !== formData.confirmPassword) {
+        setErrors(prev => ({...prev, passwordMatch: true}));
+        return false;
+      }
+    }
+    
+    return true;
+  };
+
   const nextStep = () => {
-    setStep((prev) => prev + 1);
+    if (validateStep(step)) {
+      setStep((prev) => prev + 1);
+    }
   };
 
   const prevStep = () => {
@@ -89,6 +119,13 @@ export default function RegistroPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check if terms are accepted
+    if (!formData.acceptTerms) {
+      setErrors(prev => ({...prev, termsAccepted: true}));
+      return;
+    }
+    
     // Simulação de envio - em produção, enviar para a API
     alert('Cadastro realizado com sucesso! Redirecionando para pagamento...');
   };
@@ -203,11 +240,45 @@ export default function RegistroPage() {
                           value={formData.confirmPassword}
                           onChange={handleChange}
                           required
-                          className="input pl-10"
+                          className={`input pl-10 ${errors.passwordMatch ? 'border-red-500' : ''}`}
                           placeholder="Digite sua senha novamente"
                         />
                       </div>
+                      {errors.passwordMatch && (
+                        <p className="text-red-500 text-sm mt-1">As senhas não coincidem.</p>
+                      )}
                     </div>
+
+                    <div className="flex items-start mt-4">
+                      <input
+                        type="checkbox"
+                        id="acceptTerms"
+                        name="acceptTerms"
+                        checked={formData.acceptTerms}
+                        onChange={handleChange}
+                        className={`h-4 w-4 mt-1 text-primary focus:ring-primary border-gray-300 rounded ${errors.termsAccepted ? 'border-red-500' : ''}`}
+                      />
+                      <label htmlFor="acceptTerms" className="ml-2 block text-sm text-gray-700">
+                        Ao criar uma conta, você concorda com nossos{' '}
+                        <Link href="/termos-de-uso" target="_blank" className="text-primary hover:underline">
+                          Termos de Uso
+                        </Link>
+                        ,{' '}
+                        <Link href="/politica-de-privacidade" target="_blank" className="text-primary hover:underline">
+                          Política de Privacidade
+                        </Link>
+                        {' '}e{' '}
+                        <Link href="/politica-de-cookies" target="_blank" className="text-primary hover:underline">
+                          Política de Cookies
+                        </Link>
+                        .
+                      </label>
+                    </div>
+                    {errors.termsAccepted && (
+                      <p className="text-red-500 text-sm mt-1">
+                        Você precisa aceitar os termos e condições para continuar.
+                      </p>
+                    )}
 
                     <div className="pt-4">
                       <button
@@ -338,43 +409,35 @@ export default function RegistroPage() {
                       
                       {/* Input para adicionar nova cidade */}
                       <div className="flex gap-2">
-                        <div className="flex-grow">
-                          <CityAutocomplete
-                            value={newLocation}
-                            onChange={setNewLocation}
-                            placeholder="Digite uma cidade (ex: São Paulo, SP)"
-                            id="newLocation"
-                          />
-                        </div>
-                        <button
-                          type="button"
+                        <CityAutocomplete
+                          value={newLocation}
+                          onChange={setNewLocation}
+                          placeholder="Digite uma cidade"
+                          className="flex-1"
+                        />
+                        <button 
+                          type="button" 
                           onClick={addLocation}
+                          className="btn btn-sm btn-outline"
                           disabled={!newLocation}
-                          className="btn btn-outline mt-0"
                         >
                           Adicionar
                         </button>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
-                        Adicione as cidades onde você deseja receber oportunidades de plantão
-                      </p>
                     </div>
 
                     <div>
-                      <label htmlFor="minSalary" className="label flex justify-between">
-                        <span>Remuneração mínima</span>
-                        <span>R$ {formData.minSalary}/plantão</span>
+                      <label htmlFor="minSalary" className="label">
+                        Valor mínimo por plantão (R$)
                       </label>
                       <input
-                        type="range"
+                        type="number"
                         id="minSalary"
                         name="minSalary"
-                        min="500"
-                        max="3000"
-                        step="100"
                         value={formData.minSalary}
                         onChange={handleChange}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                        min={0}
+                        className="input"
                       />
                     </div>
 
@@ -414,13 +477,15 @@ export default function RegistroPage() {
                     <div className="mt-6 p-4 bg-light-gray rounded-lg">
                       <h3 className="font-semibold mb-2">Plano selecionado: {formData.plan.charAt(0).toUpperCase() + formData.plan.slice(1)}</h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        {formData.plan === 'calm' && '5 consultas/dia, resumo diário 08h - R$49/mês'}
-                        {formData.plan === 'active' && '15 consultas/dia, resumo 06h e 18h - R$99/mês'}
-                        {formData.plan === 'frenetic' && 'Consultas ilimitadas, alertas em tempo real - R$149/mês'}
+                        {formData.plan === 'gratuito' && 'Plano gratuito com recursos limitados'}
+                        {formData.plan === 'residente' && 'Recursos completos para residentes - R$29,90/mês'}
+                        {formData.plan === 'plantonista' && 'Recursos premium com notificações em tempo real - R$59,90/mês'}
                       </p>
-                      <p className="text-xs text-gray-500">
-                        Você terá 7 dias de teste grátis. Cancele quando quiser.
-                      </p>
+                      {formData.plan !== 'gratuito' && (
+                        <p className="text-xs text-gray-500">
+                          Você terá 7 dias de teste grátis. Cancele quando quiser.
+                        </p>
+                      )}
                     </div>
 
                     <div className="flex space-x-4 pt-4">
@@ -435,8 +500,16 @@ export default function RegistroPage() {
                         type="submit"
                         className="btn btn-primary flex-1 items-center justify-center flex"
                       >
-                        <FiCreditCard className="mr-2" />
-                        Finalizar e Configurar Pagamento
+                        {formData.plan !== 'gratuito' ? (
+                          <>
+                            <FiCreditCard className="mr-2" />
+                            Finalizar e Configurar Pagamento
+                          </>
+                        ) : (
+                          <>
+                            Finalizar Cadastro
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>

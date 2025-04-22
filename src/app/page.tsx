@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FiClock, FiDollarSign, FiSearch, FiFilter, FiSmartphone } from "react-icons/fi";
+import { FiClock, FiDollarSign, FiSearch, FiFilter, FiSmartphone, FiShield } from "react-icons/fi";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -19,31 +19,31 @@ export default function Home() {
           <div className="container-custom py-16 md:py-24 grid md:grid-cols-2 gap-8 items-center">
             <div className="order-2 md:order-1">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
-                Pare de vasculhar <span className="text-primary">WhatsApp</span>.
+                Plantões ideais para <span className="text-primary">início de carreira</span>.
                 <br />
-                <span className="text-secondary">Receba plantões filtrados.</span>
+                <span className="text-secondary">Sem burocracia.</span>
               </h1>
               <p className="text-lg text-gray-700 mb-8">
-                Conectamos você às melhores oportunidades de plantão, sem precisar ficar em centenas de grupos. 
-                Filtrado, organizado, direto no seu e-mail. Todo dia.
+                Médicos recém-formados encontram 40% mais oportunidades conosco. Filtrado, 
+                organizado, direto no seu e-mail. Compatível com sua residência.
               </p>
               <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                 <Link href="/registro" className="btn btn-primary btn-lg">
                   Criar conta grátis
                 </Link>
-                <Link href="/como-funciona" className="btn btn-outline btn-lg">
+                <Link href="#como-funciona" className="btn btn-outline btn-lg">
                   Como funciona
                 </Link>
               </div>
               <div className="mt-8 flex items-center text-sm text-gray-600">
                 <span className="flex items-center">
                   <FiClock className="mr-1 h-4 w-4 text-gray-400" />
-                  Filtro diário
+                  Economize tempo
                 </span>
                 <span className="mx-2">•</span>
                 <span className="flex items-center">
                   <FiDollarSign className="mr-1 h-4 w-4 text-gray-400" />
-                  Planos a partir de R$49/mês
+                  A partir de R$29,90/mês
                 </span>
                 <span className="mx-2">•</span>
                 <span className="flex items-center">
@@ -69,7 +69,7 @@ export default function Home() {
                 Oportunidades atualizadas em tempo real
               </h2>
               <p className="text-gray-600">
-                Integramos com grupos de WhatsApp e processamos centenas de vagas diariamente
+                Encontre plantões compatíveis com sua residência médica e disponibilidade
               </p>
             </div>
             <LiveTicker />
@@ -77,12 +77,12 @@ export default function Home() {
         </section>
 
         {/* How it works */}
-        <section className="py-16 bg-light-gray">
+        <section id="como-funciona" className="py-16 bg-light-gray">
           <div className="container-custom">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Como funciona</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Substituímos centenas de grupos de WhatsApp por uma única solução inteligente que entrega só o que você precisa.
+                Economize o tempo que gastaria em grupos de WhatsApp e invista em sua formação e descanso.
               </p>
             </div>
 
@@ -103,7 +103,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">2. Filtramos as vagas</h3>
                 <p className="text-gray-600">
-                  Nosso algoritmo identifica vagas duplicadas, extrai dados relevantes e organiza tudo.
+                  Adaptamos as vagas para sua disponibilidade e preferências, focando no início de carreira.
                 </p>
               </div>
 
@@ -113,7 +113,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">3. Você recebe só o ideal</h3>
                 <p className="text-gray-600">
-                  Conforme suas preferências, enviamos apenas as vagas que fazem sentido para você.
+                  Compare valores e escolha as melhores oportunidades para complementar sua renda.
                 </p>
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function Home() {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">O que dizem nossos médicos</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Centenas de médicos já deixaram os grupos de WhatsApp de lado e usam o Caca-Plantão para encontrar suas oportunidades.
+                Médicos recém-formados já deixaram os grupos de WhatsApp de lado e usam o Caça Plantão para complementar sua renda.
               </p>
             </div>
 
@@ -144,7 +144,7 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-gray-700">
-                  "Passei de 5 para 10 plantões mensais em apenas 2 semanas usando o Caca-Plantão. A praticidade de não precisar ler centenas de mensagens por dia me economiza horas!"
+                  "Consigo conciliar a residência com plantões extras. O Caça Plantão me economiza horas que eu gastava em grupos de WhatsApp!"
                 </p>
               </div>
 
@@ -158,7 +158,7 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-gray-700">
-                  "O plano Frenetic me salvou quando fiquei desempregado. Em 48h consegui agendar 3 plantões para a mesma semana. Sistema prático e ótimo suporte."
+                  "O plano Essencial custa apenas R$0,99 por dia e me ajuda a complementar a renda no início da carreira. Melhor investimento que fiz!"
                 </p>
               </div>
 
@@ -172,7 +172,7 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-gray-700">
-                  "Eu odiava ter que ficar scrollando grupos de WhatsApp o dia todo. Agora recebo um email de manhã com as vagas que realmente fazem sentido para mim. Muito prático!"
+                  "Recém-formada, eu precisava de renda extra, mas tinha pouco tempo para buscar. O Caça Plantão me envia exatamente o que preciso!"
                 </p>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function Home() {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Perguntas Frequentes</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Tire suas dúvidas sobre como o Caca-Plantão funciona e como pode ajudar na sua carreira.
+                Tire suas dúvidas sobre como o Caça Plantão pode ajudar no início da sua carreira médica.
               </p>
             </div>
 
@@ -193,7 +193,7 @@ export default function Home() {
               <div className="space-y-6">
                 {/* FAQ Item 1 */}
                 <div className="bg-white rounded-lg p-6 shadow-sm">
-                  <h3 className="text-lg font-bold mb-2">Como o Caca-Plantão acessa os grupos de WhatsApp?</h3>
+                  <h3 className="text-lg font-bold mb-2">Como o Caça Plantão acessa os grupos de WhatsApp?</h3>
                   <p className="text-gray-600">
                     Nosso sistema usa um WhatsApp corporativo que participa de grupos de agências parceiras. Analisamos apenas mensagens públicas relacionadas a oportunidades de plantão.
                   </p>
@@ -201,10 +201,9 @@ export default function Home() {
 
                 {/* FAQ Item 2 */}
                 <div className="bg-white rounded-lg p-6 shadow-sm">
-                  <h3 className="text-lg font-bold mb-2">Qual a vantagem em relação a estar nos grupos?</h3>
+                  <h3 className="text-lg font-bold mb-2">Posso usar o Caça Plantão durante a residência médica?</h3>
                   <p className="text-gray-600">
-                    Economia de tempo e foco. Você não precisa ler centenas de mensagens não relacionadas, 
-                    ver vagas repetidas ou que não se aplicam a você. Entregamos apenas o que faz sentido conforme seu perfil.
+                    Sim! Muitos dos nossos usuários são residentes que complementam sua renda com plantões compatíveis com seus horários. Nossos filtros ajudam a encontrar oportunidades ideais.
                   </p>
                 </div>
 
@@ -212,17 +211,16 @@ export default function Home() {
                 <div className="bg-white rounded-lg p-6 shadow-sm">
                   <h3 className="text-lg font-bold mb-2">Como funciona a cobrança? Posso cancelar quando quiser?</h3>
                   <p className="text-gray-600">
-                    Oferecemos planos mensais e anuais com 7 dias de teste grátis. Você pode cancelar a qualquer momento 
+                    Oferecemos planos mensais a partir de R$29,90 com 7 dias de teste grátis. Você pode cancelar a qualquer momento 
                     pela sua área do cliente. Não há multa ou fidelidade.
                   </p>
                 </div>
 
                 {/* FAQ Item 4 */}
                 <div className="bg-white rounded-lg p-6 shadow-sm">
-                  <h3 className="text-lg font-bold mb-2">O Caca-Plantão cobra comissão das agências ou dos médicos?</h3>
+                  <h3 className="text-lg font-bold mb-2">Como o Caça Plantão protege minha privacidade?</h3>
                   <p className="text-gray-600">
-                    Não! Somos apenas um filtro inteligente. Você negocia diretamente com a agência ou hospital. 
-                    Nosso modelo de receita é baseado apenas nas assinaturas, sem taxas ocultas.
+                    Seu número nunca é exposto em grupos. Nossa equipe monitora os grupos de WhatsApp para você, filtrando as oportunidades sem comprometer seus dados pessoais.
                   </p>
                 </div>
               </div>
@@ -233,17 +231,40 @@ export default function Home() {
         {/* CTA Section */}
         <section className="py-16 bg-primary text-white">
           <div className="container-custom text-center">
-            <h2 className="text-3xl font-bold mb-6">
-              Pronto para deixar os grupos de WhatsApp de lado?
+            <h2 className="text-3xl font-bold mb-6 text-white">
+              Encontre plantões ideais para o início da sua carreira
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Milhares de plantões organizados e filtrados para você. 
-              Economize tempo e encontre as melhores oportunidades.
+            <div className="max-w-3xl mx-auto mb-8">
+              <ul className="text-left space-y-3 mb-6">
+                <li className="flex items-start">
+                  <span className="text-secondary mr-2 font-bold text-xl">✓</span>
+                  <span>Acesso a <strong>oportunidades exclusivas</strong> para médicos recém-formados</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-secondary mr-2 font-bold text-xl">✓</span>
+                  <span>Plantões compatíveis com sua <strong>residência médica</strong> ou horários de estudo</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-secondary mr-2 font-bold text-xl">✓</span>
+                  <span>Economize <strong>até 5 horas por semana</strong> que seriam gastas em grupos de WhatsApp</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-secondary mr-2 font-bold text-xl">✓</span>
+                  <span>Encontre plantões com <strong>melhores salários</strong> e mais próximos da sua localização</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-secondary mr-2 font-bold text-xl">✓</span>
+                  <span>Proteja sua <strong>privacidade e número pessoal</strong>, evitando exposição em grupos públicos</span>
+                </li>
+              </ul>
+            </div>
+            <p className="text-xl mb-8 max-w-2xl mx-auto font-medium text-white">
+              Por apenas R$0,99 por dia, tenha acesso às melhores oportunidades para médicos recém-formados.
             </p>
-            <Link href="/registro" className="btn bg-secondary hover:bg-secondary-dark text-black btn-lg">
+            <Link href="/registro" className="btn bg-secondary hover:bg-secondary-dark text-white btn-lg">
               Começar Gratuitamente
             </Link>
-            <p className="mt-4 text-sm opacity-80">
+            <p className="mt-4 text-sm text-white opacity-90">
               7 dias de teste grátis. Cancele quando quiser.
             </p>
         </div>

@@ -40,28 +40,32 @@ export default function QuickSearchForm() {
   return (
     <div className="bg-white rounded-lg shadow-lg p-5 md:p-6">
       <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">
-        Encontre seu próximo plantão
+        Encontre plantões para seu perfil
       </h2>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Localização com Autocomplete */}
-        <CityAutocomplete
-          value={location}
-          onChange={setLocation}
-          label="Localização"
-          placeholder="Digite uma cidade (ex: São Paulo, SP)"
-          helpText="Busque por cidade para encontrar plantões próximos"
-          id="location"
-          name="location"
-        />
+        <div>
+          <label htmlFor="location" className="label">
+            Onde você quer trabalhar?
+          </label>
+          <CityAutocomplete
+            value={location}
+            onChange={setLocation}
+            placeholder="Digite sua cidade (ex: São Paulo, SP)"
+            helpText="Procuramos plantões próximos à sua localização"
+            id="location"
+            name="location"
+          />
+        </div>
 
         {/* Faixa Salarial */}
         <div>
           <div className="flex justify-between items-center">
             <label htmlFor="salary" className="label">
-              Faixa Salarial (por plantão)
+              Valor mínimo (por plantão)
             </label>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-primary">
               R$ {salaryRange[1].toLocaleString('pt-BR')}
             </span>
           </div>
@@ -95,7 +99,7 @@ export default function QuickSearchForm() {
             />
             <label htmlFor="includeRemote" className="ml-2 flex items-center text-sm text-gray-700">
               <FiWifi className="mr-1 text-gray-500" size={16} />
-              Incluir plantões remotos (telemedicina)
+              Incluir telemedicina (plantões remotos)
             </label>
           </div>
 
@@ -109,7 +113,7 @@ export default function QuickSearchForm() {
               className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
             />
             <label htmlFor="cashOnly" className="ml-2 block text-sm text-gray-700">
-              Somente pagamentos à vista
+              Apenas pagamento no mesmo dia
             </label>
           </div>
         </div>
@@ -119,7 +123,7 @@ export default function QuickSearchForm() {
           type="submit"
           disabled={isLoading}
           className={`w-full btn ${
-            isLoading ? 'bg-gray-400' : 'btn-primary'
+            isLoading ? 'bg-gray-400' : 'btn-secondary'
           } flex items-center justify-center`}
         >
           {isLoading ? (
@@ -127,7 +131,7 @@ export default function QuickSearchForm() {
           ) : (
             <>
               <FiSearch className="mr-2" />
-              Buscar Plantões
+              Ver oportunidades disponíveis
             </>
           )}
         </button>

@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --primary: #0056B3;
-  --primary-light: #2E77C5;
-  --primary-dark: #00418A;
-  --secondary: #FFB300;
-  --secondary-light: #FFCA4F;
-  --secondary-dark: #CC8F00;
+  --primary: #2563EB;
+  --primary-light: #3B82F6;
+  --primary-dark: #1D4ED8;
+  --secondary: #10B981;
+  --secondary-light: #34D399;
+  --secondary-dark: #059669;
   --white: #FFFFFF;
   --light-gray: #F5F7FA;
   --med-gray: #E4E7EB;
@@ -65,7 +65,7 @@
   }
 
   .btn-secondary {
-    @apply bg-secondary hover:bg-secondary-dark text-black focus:ring-secondary;
+    @apply bg-secondary hover:bg-secondary-dark text-white focus:ring-secondary;
   }
 
   .btn-outline {
@@ -121,6 +121,6 @@
   }
 
   .job-card {
-    @apply p-4 border border-med-gray rounded-lg mb-4 hover:shadow-md transition-shadow;
+    @apply p-4 border border-med-gray rounded-lg mb-4 hover:shadow-md transition-shadow duration-200 hover:border-primary-light;
   }
 }

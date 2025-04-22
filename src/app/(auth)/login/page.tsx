@@ -31,7 +31,7 @@ export default function LoginPage() {
     setIsLoading(true);
     setError('');
 
-    // Simulação de login - em produção, enviar para a API
+    // Simulação de login - em produção, enviar para a API/Keycloak
     try {
       // Simulação de atraso de rede
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -159,11 +159,11 @@ export default function LoginPage() {
                 <div className="mt-8 pt-6 border-t border-gray-200">
                   <p className="text-xs text-center text-gray-500">
                     Ao fazer login, você concorda com nossos{' '}
-                    <Link href="/termos-de-uso" className="text-primary">
+                    <Link href="/termos-de-uso" className="text-primary hover:underline">
                       Termos de Uso
                     </Link>{' '}
                     e{' '}
-                    <Link href="/politica-de-privacidade" className="text-primary">
+                    <Link href="/politica-de-privacidade" className="text-primary hover:underline">
                       Política de Privacidade
                     </Link>
                     .

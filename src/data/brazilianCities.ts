@@ -52,16 +52,26 @@ export const brazilianCities = [
   { name: "Mauá", state: "SP" }
 ];
 
+/**
+ * Remove acentos e caracteres especiais de uma string
+ */
+const normalizeString = (str: string): string => {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+};
+
 // Helper function to search cities
 export const searchCities = (query: string) => {
   if (!query || query.length < 2) return [];
   
-  const lowercaseQuery = query.toLowerCase();
+  const normalizedQuery = normalizeString(query.toLowerCase());
   
   return brazilianCities
-    .filter(city => 
-      city.name.toLowerCase().includes(lowercaseQuery) ||
-      `${city.name}, ${city.state}`.toLowerCase().includes(lowercaseQuery)
-    )
+    .filter(city => {
+      const normalizedCityName = normalizeString(city.name.toLowerCase());
+      const normalizedFullName = normalizeString(`${city.name}, ${city.state}`.toLowerCase());
+      
+      return normalizedCityName.includes(normalizedQuery) || 
+             normalizedFullName.includes(normalizedQuery);
+    })
     .slice(0, 10); // Limit to 10 results
 }; 

@@ -1,113 +1,116 @@
-# Caça Plantão - Website
+# CaçaPlantão Web
 
-Esta é a landing page e aplicação web do serviço Caça Plantão, uma plataforma que conecta médicos a oportunidades de plantão.
+A modern web platform connecting healthcare professionals with shift work opportunities.
 
-## Tecnologias Utilizadas
+## 🚀 Quick Start
 
-- [Next.js 15](https://nextjs.org/) - Framework React com suporte a SSR, SSG, e mais
-- [TypeScript](https://www.typescriptlang.org/) - JavaScript tipado
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário
-- [Prisma](https://www.prisma.io/) - ORM para Node.js e TypeScript
-- [NextAuth.js](https://next-auth.js.org/) - Autenticação para Next.js
-- [Stripe](https://stripe.com/) - Processamento de pagamentos
-
-## Pré-requisitos
-
-- Node.js 20.x ou superior
-- PostgreSQL (local ou hospedado)
-- Conta Stripe (para processamento de pagamentos)
-
-## Instalação
-
-1. Clone o repositório
 ```bash
-git clone https://github.com/cacaplantao/website.git
-cd website
-```
+# Clone the repository
+git clone https://github.com/caca-plantao/cacaplantao-web.git
 
-2. Instale as dependências
-```bash
+# Navigate to project directory
+cd cacaplantao-web
+
+# Install dependencies
 npm install
-```
 
-3. Configure as variáveis de ambiente
-```bash
-cp .env.example .env
-```
-
-4. Edite o arquivo `.env` com suas configurações:
-```bash
-# Database
-DATABASE_URL="postgresql://usuario:senha@localhost:5432/cacaplantao"
-
-# NextAuth
-NEXTAUTH_SECRET="chave-secreta-aleatoria" # Em produção, use um valor aleatório seguro
-NEXTAUTH_URL="http://localhost:3000"
-
-# Stripe
-STRIPE_SECRET_KEY="sk_test_sua_chave"
-STRIPE_PUBLISHABLE_KEY="pk_test_sua_chave"
-STRIPE_WEBHOOK_SECRET="whsec_sua_chave"
-
-# URLs
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-NEXT_PUBLIC_API_URL="http://localhost:3000/api"
-
-# SEO e Analytics (opcional)
-NEXT_PUBLIC_GOOGLE_ANALYTICS="G-XXXXXXXX"
-```
-
-5. Execute as migrações do Prisma para criar o banco de dados
-```bash
-npx prisma migrate dev
-```
-
-6. Inicialize o servidor de desenvolvimento
-```bash
+# Start development server
 npm run dev
 ```
 
-7. Acesse a aplicação em [http://localhost:3000](http://localhost:3000)
+Visit `http://localhost:3000` to see the application.
 
-## Scripts Disponíveis
+## 🛠️ Tech Stack
 
-- `npm run dev` - Inicia o servidor de desenvolvimento com Turbopack
-- `npm run build` - Compila a aplicação para produção
-- `npm run start` - Inicia a aplicação compilada
-- `npm run lint` - Executa o linter
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS
+- **Authentication:** Keycloak (coming soon)
+- **State Management:** React Context + Hooks
+- **Forms:** React Hook Form (planned)
+- **Testing:** Jest + React Testing Library (planned)
 
-## Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 src/
-├── app/           # Rotas da aplicação Next.js
-├── components/    # Componentes React reutilizáveis
-├── data/          # Dados mock, constantes e configurações
-├── generated/     # Arquivos gerados pelo Prisma
-├── hooks/         # Custom React hooks
-├── lib/           # Bibliotecas e inicialização
-└── utils/         # Funções utilitárias
+├── app/                  # Next.js app router pages
+│   ├── (auth)/          # Authentication routes
+│   ├── (dashboard)/     # Protected dashboard routes
+│   └── layout.tsx       # Root layout
+├── components/          # Reusable components
+├── contexts/           # React contexts
+├── hooks/              # Custom hooks
+├── lib/                # Utility functions
+├── styles/            # Global styles
+└── types/             # TypeScript types
 ```
 
-## Deploy
+## 🔑 Environment Variables
 
-A aplicação está configurada para ser facilmente implantada na Vercel:
+Create a `.env.local` file in the root directory:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080
+NEXT_PUBLIC_KEYCLOAK_URL=http://localhost:8081
+NEXT_PUBLIC_KEYCLOAK_REALM=cacaplantao
+NEXT_PUBLIC_KEYCLOAK_CLIENT_ID=web
+```
+
+## 🧪 Testing
 
 ```bash
-npm run build
-vercel --prod
+# Run unit tests
+npm test
+
+# Run e2e tests
+npm run test:e2e
+
+# Run tests with coverage
+npm run test:coverage
 ```
 
-Para outros provedores, consulte a [documentação de implantação do Next.js](https://nextjs.org/docs/deployment).
+## 📦 Build
 
-## Contribuição
+```bash
+# Create production build
+npm run build
 
-1. Faça um fork do projeto
-2. Crie sua feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit suas mudanças (`git commit -m 'feat: add some amazing feature'`)
-4. Push para a branch (`git push origin feature/amazing-feature`)
-5. Abra um Pull Request
+# Start production server
+npm start
+```
 
-## Licença
+## 🤝 Contributing
 
-Este projeto é protegido por direitos autorais e propriedade da Caça Plantão.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Commit Convention
+
+We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+- `feat:` New features
+- `fix:` Bug fixes
+- `docs:` Documentation changes
+- `style:` Code style changes (formatting, semicolons, etc)
+- `refactor:` Code refactoring
+- `test:` Adding or updating tests
+- `chore:` Maintenance tasks
+
+### Branch Naming Convention
+
+- `feature/*` - New features
+- `fix/*` - Bug fixes
+- `docs/*` - Documentation updates
+- `refactor/*` - Code refactoring
+- `test/*` - Test updates
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔄 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for all notable changes.

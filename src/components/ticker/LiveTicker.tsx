@@ -98,9 +98,9 @@ export default function LiveTicker() {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 mb-8">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">Plantões chegando em tempo real</h3>
-        <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-          +{totalProcessed} processados hoje
+        <h3 className="text-lg font-semibold text-gray-800">Plantões disponíveis agora</h3>
+        <span className="text-sm bg-secondary-light text-white px-3 py-1 rounded-full">
+          +{totalProcessed} novas oportunidades hoje
         </span>
       </div>
 
@@ -113,9 +113,9 @@ export default function LiveTicker() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, height: 0, marginBottom: 0 }}
               transition={{ duration: 0.3 }}
-              className="ticker-item flex items-center gap-3"
+              className="ticker-item flex items-center gap-3 border border-transparent hover:border-primary-light rounded-lg transition-all duration-200"
             >
-              <div className="flex-shrink-0 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              <div className="flex-shrink-0 w-2 h-2 bg-secondary rounded-full animate-pulse" />
               <div className="flex-grow">
                 <p className="font-medium text-gray-800">{message.title}</p>
                 <div className="flex items-center gap-4 text-xs text-gray-500 mt-1">
@@ -123,7 +123,7 @@ export default function LiveTicker() {
                     <FiMapPin className="mr-1" size={12} />
                     {message.location}
                   </span>
-                  <span className="flex items-center text-primary font-medium">
+                  <span className="flex items-center text-secondary font-medium">
                     <FiDollarSign className="mr-1" size={12} />
                     {formatCurrency(message.salary)}
                   </span>
@@ -131,7 +131,7 @@ export default function LiveTicker() {
               </div>
               <div className="text-xs text-gray-400 flex items-center">
                 <FiClock className="mr-1" size={12} />
-                Agora
+                Há instantes
               </div>
             </motion.div>
           ))}
