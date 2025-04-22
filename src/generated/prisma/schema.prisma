@@ -1,0 +1,144 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelos para o Caca-Plantão
+
+// Usuário (médico)
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  emailVerified DateTime?
+  image         String?
+  crm           String    @unique
+  phoneNumber   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relações
+  subscription        Subscription?
+  viewedOpportunities ViewedOpportunity[]
+  savedOpportunities  SavedOpportunity[]
+  sessions            Session[]
+
+  // Preferências
+  specialties        String[] // ["CLINICA_GERAL", "EMERGENCIA", etc.]
+  preferredLocations String[] // CEPs ou regiões de interesse
+  minSalary          Float?
+  maxDistance        Int? // em km
+  prefersCashOnly    Boolean  @default(false)
+
+  @@index([email])
+}
+
+// Sessão de autenticação
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// Oportunidade de plantão (gerada pelo job-parsing)
+model Opportunity {
+  id            String   @id @default(cuid())
+  title         String
+  description   String?
+  location      String // Localização (endereço, cidade)
+  latitude      Float? // Para cálculo de distância
+  longitude     Float? // Para cálculo de distância
+  salary        Float // Valor do plantão
+  salaryPerHour Float? // Calculado
+  specialty     String // Especialidade médica
+  shiftType     String // Tipo (Emergência, Clínica, etc)
+  date          DateTime // Data do plantão
+  duration      Int? // Duração em horas
+  isCashPayment Boolean  @default(false) // Pagamento à vista
+  contactName   String? // Nome do contato
+  contactNumber String // Número de WhatsApp (mascarado no front)
+  agencyName    String? // Nome da agência/hospital
+  createdAt     DateTime @default(now())
+
+  // Relações
+  viewedBy ViewedOpportunity[]
+  savedBy  SavedOpportunity[]
+
+  @@index([location])
+  @@index([specialty])
+  @@index([date])
+  @@index([salary])
+}
+
+// Registro de visualizações
+model ViewedOpportunity {
+  id            String   @id @default(cuid())
+  userId        String
+  opportunityId String
+  viewedAt      DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, opportunityId])
+  @@index([userId])
+  @@index([opportunityId])
+}
+
+// Vagas salvas
+model SavedOpportunity {
+  id            String   @id @default(cuid())
+  userId        String
+  opportunityId String
+  savedAt       DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, opportunityId])
+  @@index([userId])
+  @@index([opportunityId])
+}
+
+// Planos de assinatura
+model Subscription {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  stripeCustomerId     String? @unique
+  stripeSubscriptionId String? @unique
+  stripePriceId        String?
+
+  planType String // "CALM", "ACTIVE", "FRENETIC"
+
+  // Limites baseados no plano
+  dailyViewLimit        Int // 5, 15, ilimitado
+  notificationFrequency Int // 1 (diário), 2 (2x dia), 0 (real-time)
+
+  status String // "ACTIVE", "PAST_DUE", "CANCELED", "TRIAL"
+
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
